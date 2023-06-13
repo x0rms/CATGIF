@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Cat GIF</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .cat-gif {
+            max-width: 500px;
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="cat-gif" src="" alt="Cat GIF">
+    </div>
+
+    <script>
+        function getRandomCatGif() {
+            fetch('https://api.thecatapi.com/v1/images/search?mime_types=gif')
+                .then(response => response.json())
+                .then(data => {
+                    const gifImages = data.filter(image => image.url.endsWith('.gif'));
+                    if (gifImages.length > 0) {
+                        const randomIndex = Math.floor(Math.random() * gifImages.length);
+                        const catGif = document.querySelector('.cat-gif');
+                        catGif.src = gifImages[randomIndex].url;
+                    }
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
+        }
+
+        getRandomCatGif();
+    </script>
+</body>
+</html>
